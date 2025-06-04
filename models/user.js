@@ -1,10 +1,15 @@
 const {DataTypes} = require('sequelize');
-const sequelize = require('./index');
+const sequelize = require("../db")
 
 const User = sequelize.define(
   'User',
   {
     // Model attributes are defined here
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     User_name: {
       type: DataTypes.STRING,
       allowNull: false,

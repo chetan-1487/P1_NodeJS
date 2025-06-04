@@ -20,5 +20,8 @@
     "pg-hstore": "^2.3.4",
     "postgres": "^3.4.7",
     "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3"
   }
 }

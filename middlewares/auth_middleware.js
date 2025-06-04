@@ -15,7 +15,7 @@ function authenticate(req, res, next) {
 
 function authorize(role) {
   return (req, res, next) => {
-    if (req.user.role !== role) return res.status(403).json({ error: 'Forbidden' });
+    if (req.user.role !== role) return res.status(403).json({ error: 'Only admin can take action not user.' });
     next();
   };
 }

@@ -1,16 +1,13 @@
-const {Sequelize}= require("sequelize")
+const User=require("./user");
+const Blog=require("./blog")
 
-const sequelize = new Sequelize('postgres://postgres:chetan@127.0.0.1:5432/User_blog',{
-    logging: false,
-})
 
-try {
-  sequelize.authenticate();
-  console.log('Connection has been established successfully.');
-} catch (error) {
-  console.error('Unable to connect to the database:', error);
-}
+User.hasMany(Blog, {
+  foreignKey: "user_id",
+  as: "blogs",
+});
 
-sequelize.sync({force: false})
-
-module.exports= sequelize
+Blog.belongsTo(User, {
+  foreignKey: "user_id",
+  as: "user",
+});

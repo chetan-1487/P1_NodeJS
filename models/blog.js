@@ -1,5 +1,5 @@
 const {DataTypes} = require("sequelize")
-const sequelize = require("./index")
+const sequelize = require("../db")
 
 const Blog = sequelize.define(
     "Blog",
@@ -9,6 +9,15 @@ const Blog = sequelize.define(
             },
         description: {
             type: DataTypes.STRING,
+        },
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: "users", // matches table name of User model
+                key: "id",
+            },
+            onDelete: "CASCADE",
         },
     },
     {
