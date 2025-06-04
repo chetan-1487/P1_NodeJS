@@ -1,37 +1,22 @@
-const express= require("express")
-const bodyParser= require("body-parser")
-const userCtrl= require("./controllers/userController")
-const blogCtrl= require("./controllers/blogController")
-const authRoutes=require("./routes/auth_routes");
+import express from 'express';
+import blog_routes from "./routes/blog.js"
+import user_routes from "./routes/user.js"
+import dotenv from 'dotenv';
+dotenv.config();
 
-const { authenticate, authorize } = require("./middlewares/auth_middleware");
+const app=express()
 
-app=express()
+const port = process.env.PORT;
 
-app.use(bodyParser.json())
+app.use(express.json());
 
+app.use(user_routes);
+app.use(blog_routes);
 
 app.get("/",(req, res)=>{
     res.end("Hello world")
-})
+});
 
-app.get("/user/details", authenticate, userCtrl.getUser)
-app.get("/user/:id", authenticate, userCtrl.getUser_Byid)
-app.delete("/user/:id", authenticate, authorize('admin'), userCtrl.deleteUser)
-app.patch("/user/:id", authenticate, authorize('admin'), userCtrl.updateUser)
-
-app.get("/blogs", authenticate, blogCtrl.getBlogs)
-app.post("/blog", authenticate, blogCtrl.createBlog)
-app.delete("/blog/:id", authenticate, authorize('admin'), blogCtrl.deleteBlog)
-app.patch("/blog/:id", authenticate, authorize('admin'), blogCtrl.updateBlog)
-
-// Register User
-app.post('/register',authRoutes.Register);
-
-// Login login
-app.post('/login',authRoutes.login);
-
-
-app.listen(3000,(err)=>{
-    console.log("Server is run at: http://localhost:3000")
-})
+app.listen(port,(err)=>{
+    console.log(`Server is run at: http://localhost:${port}`)
+});

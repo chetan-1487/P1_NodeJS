@@ -1,13 +1,12 @@
-const User=require("./user");
-const Blog=require("./blog")
+import user from './user.js';
+import blog from './blog.js';
 
-
-User.hasMany(Blog, {
+user.hasMany(blog, {
   foreignKey: "user_id",
   as: "blogs",
 });
 
-Blog.belongsTo(User, {
+blog.belongsTo(user, {
   foreignKey: "user_id",
   as: "user",
 });

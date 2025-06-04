@@ -1,4 +1,4 @@
-const {Sequelize}= require("sequelize")
+import { Sequelize } from 'sequelize';
 
 const sequelize = new Sequelize('postgres://postgres:chetan@127.0.0.1:5432/User_blog',{
     logging: false,
@@ -14,4 +14,4 @@ try {
 
 sequelize.sync({force: false})
 
-module.exports= sequelize
+export default sequelize;

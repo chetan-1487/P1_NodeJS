@@ -1,24 +1,23 @@
-var Blog=require("../models/blog")
+import Blog from '../models/blog.js';
 
-var getBlogs=async (req,res)=>{
-    const data =await Blog.findAll({
-        inclu
-    });
+export const get_blogs=async (req,res)=>{
+    let data =await Blog.findAll({});
     res.status(200).json(data);
 }
 
-var createBlog=async (req,res)=>{
+export const create_blog=async (req,res)=>{
     const { title, description } = req.body;
-    var createData=req.body;
+    let createData=req.body;
+    let data;
 
     if(createData.length>1){
-        var data = await Blog.bulkCreate({
+            data = await Blog.bulkCreate({
             title,
             description,
             user_id: req.user.id,  
         });   
     }else{
-        var data = await Blog.create({
+            data = await Blog.create({
             title,
             description,
             user_id: req.user.id,  
@@ -27,8 +26,8 @@ var createBlog=async (req,res)=>{
     res.status(201).json(data);
 }
 
-var deleteBlog=async (req,res)=>{
-    const blog = await Blog.findOne({ where: { id: req.params.id } });
+export const delete_blog=async (req,res)=>{
+    let blog = await Blog.findOne({ where: { id: req.params.id } });
     if (!blog) {
         return res.status(401).json({ error: 'Blog not existed for deletion' });
     }
@@ -40,8 +39,8 @@ var deleteBlog=async (req,res)=>{
     res.send({"msg":`Blog Data deleted for this id: ${req.params.id}`});
 }
 
-var updateBlog= async (req,res)=>{
-    const blog = await Blog.findOne({ where: { id: req.params.id } });
+export const update_blog= async (req,res)=>{
+    let blog = await Blog.findOne({ where: { id: req.params.id } });
     if (!blog) {
         return res.status(401).json({ error: 'Blog not existed for updation' });
     }
@@ -53,10 +52,3 @@ var updateBlog= async (req,res)=>{
     });
     res.status(200).json({"msg":updateData});
 }
-
-module.exports= {
-    getBlogs,
-    createBlog,
-    deleteBlog,
-    updateBlog,
-};
