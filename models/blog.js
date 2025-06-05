@@ -10,7 +10,7 @@ const blog = sequelize.define(
     description: {
       type: DataTypes.STRING,
     },
-    user_id: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {

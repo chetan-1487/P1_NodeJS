@@ -1,6 +1,10 @@
 import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const sequelize = new Sequelize('postgres://postgres:chetan@127.0.0.1:5432/User_blog',{
+DATABASE_URL=process.env.DATABASE_CONNECTION;
+
+const sequelize = new Sequelize(DATABASE_URL,{
     logging: false,
 })
 
