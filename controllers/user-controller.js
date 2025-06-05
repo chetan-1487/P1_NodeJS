@@ -2,21 +2,37 @@ import { getUserDetailById, userDetails, deleteUserDetails, updateUserDetails } 
 
 
 export const getUser=async (req,res)=>{
-    const data=await userDetails(req);
-    res.status(200).json(data);
+    try{
+        const data=await userDetails(req);
+        res.status(200).json(data);
+    }catch(err){
+        res.status(500).json({"msg":err});
+    }
 }
 
 export const getUserById= async (req,res)=>{
-    const data=await getUserDetailById(req);
-    res.status(200).json(data);
+    try{
+        const data=await getUserDetailById(req);
+        res.status(200).json(data);
+    }catch(err){
+        res.status(500).json({"msg":err});
+    }
 }
 
 export const deleteUser=async (req,res)=>{
-    let id=await deleteUserDetails(req);
-    res.send({"msg":`User Data deleted id: ${id}`});
+    try{
+        let id=await deleteUserDetails(req);
+        res.send({"msg":`User Data deleted id: ${id}`});
+    }catch(err){
+        res.status(500).json({"msg":err});
+    }
 }
 
 export const updateUser= async (req,res)=>{
-    let update_data=await updateUserDetails(req);
-    res.status(200).json({"msg":update_data});
+    try{
+        let update_data=await updateUserDetails(req);
+        res.status(200).json({"msg":update_data});
+    }catch(err){
+        res.status(500).json({"msg":err});
+    }
 }

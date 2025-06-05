@@ -13,6 +13,10 @@ export const register= async (req, res) => {
 
 
 export const login = async (req, res) => {
-  const token=await loginUser(req);
-  res.json({ token });
+  try {
+    const token=await loginUser(req);
+    res.json({ token });
+  } catch(err) {
+    res.status(500).json({error: 'Token failed'});
+  }
 }
