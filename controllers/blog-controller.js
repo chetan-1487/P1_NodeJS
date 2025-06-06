@@ -11,7 +11,7 @@ export const getBlogs=async (req,res)=>{
 
 export const createBlog=async (req,res)=>{
     try{
-        let data=await blogCreate(req);;
+        let data=await blogCreate(req);
         res.status(201).json(data);
     }catch (err) {
         res.status(500).json({"msg":err})
