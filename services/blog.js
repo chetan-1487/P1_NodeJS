@@ -5,7 +5,7 @@ export const blogsDetails=async (req)=>{
         let data =await Blog.findAll({});
         return data;
     }catch(err){
-        res.status(500).json({"msg":err});
+        return err;
     }
 }
 
@@ -30,15 +30,15 @@ export const blogCreate=async (req)=>{
         }
         return data;
     }catch(err){
-        res.status(500).json({"msg":err});
+        return err;
     }
 }
 
-export const blogDelete=async (req,res)=>{
+export const blogDelete=async (req)=>{
     try{
         let blog = await Blog.findOne({ where: { id: req.params.id } });
         if (!blog) {
-            return res.status(401).json({ error: 'Blog not existed for deletion' });
+            return {"msg":"Blog doesnot exist"}
         }
         await Blog.destroy({
             where:{
@@ -47,15 +47,15 @@ export const blogDelete=async (req,res)=>{
         })
         return req.params.id;
     }catch(err){
-        res.status(500).json({"msg":err});
+        return err;
     }
 }
 
-export const blogUpdate= async (req,res)=>{
+export const blogUpdate= async (req)=>{
     try{
         let blog = await Blog.findOne({ where: { id: req.params.id } });
         if (!blog) {
-            return res.status(401).json({ error: 'Blog not existed for updation' });
+            return {"msg":"Blog doesnot exist"}
         }
         newData=req.body;
         updateData= await Blog.update(newData,{
@@ -65,6 +65,6 @@ export const blogUpdate= async (req,res)=>{
         });
         return updateData;
     }catch(err){
-        res.status(500).json({"msg":err});
+        return err;
     }
 }

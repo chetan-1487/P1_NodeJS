@@ -1,5 +1,4 @@
-// swagger.js
-import swaggerJSDoc from 'swagger-jsdoc'
+import swaggerJSDoc from 'swagger-jsdoc';
 
 const options = {
   definition: {
@@ -11,11 +10,25 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000', 
+        url: 'http://localhost:3000',
+      },
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
       },
     ],
   },
-  apis: ['./routes/*.js'], 
+  apis: ['./routes/*.js'], // Path to the API docs
 };
 
 const swaggerSpec = swaggerJSDoc(options);

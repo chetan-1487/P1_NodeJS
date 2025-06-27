@@ -10,7 +10,7 @@ export const userDetails=async (req)=>{
         });
         return data;
     }catch(err){
-        res.status(500).json({"msg":err});
+        return err;
     }
 }
 
@@ -18,7 +18,7 @@ export const getUserDetailById= async (req)=>{
     try{
         let user = await User.findOne({ where: { id: req.params.id } });
         if (!user) {
-            return res.status(401).json({ error: `User not existed at id: ${id}`});
+            return {"msg":"user doesnot exist"}
         }
         const data = await User.findOne({
             attributes:{exclude:["password"]},
@@ -30,7 +30,7 @@ export const getUserDetailById= async (req)=>{
         })
         return data;
     }catch(err){
-        res.status(500).json({"msg":err});
+        return err;
     }
 }
 
@@ -38,7 +38,7 @@ export const deleteUserDetails=async (req)=>{
     try{
         let user = await User.findOne({ where: { id: req.params.id } });
         if (!user) {
-            return res.status(401).json({ error: 'User not existed' });
+            return {"msg":"user doesnot exist"}
         }
         await User.destroy({
             where:{
@@ -47,7 +47,7 @@ export const deleteUserDetails=async (req)=>{
         })
         return req.params.id;
     }catch(err){
-        res.status(500).json({"msg":err});
+        return err;
     }
 }
 
@@ -55,7 +55,7 @@ export const updateUserDetails= async (req,res)=>{
     try{
         let user = await User.findOne({ where: { id: req.params.id } });
         if (!user) {
-            return res.status(401).json({ error: 'User not existed' });
+            return {"msg":"user doesnot exist"}
         }
         newData=req.body;
         updateData= await User.update(newData,{
@@ -66,7 +66,7 @@ export const updateUserDetails= async (req,res)=>{
         });
         return updateData;
     }catch(err){
-        res.status(500).json({"msg":err});
+        return err;
     }
 }
 
@@ -84,7 +84,7 @@ export const registerUser = async (req) => {
         });
         return user;
     }catch(err){
-        res.status(500).json({"msg":err});
+        return err;
     }
 };
 
@@ -99,6 +99,6 @@ export const loginUser = async (req) => {
         let token = jwt.sign({ id: userDetail.id, role: userDetail.role }, 'secret', { expiresIn: '30m' });
         return token;
     }catch(err){
-        res.status(500).json({"msg":err});
+        return err;
     }
 }

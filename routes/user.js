@@ -13,7 +13,7 @@ import { authenticate, authorize } from '../middlewares/auth-middleware.js';
 
 /**
  * @swagger
- * /api/register:
+ * /register:
  *   post:
  *     summary: Register a new user
  *     tags: [Users]
@@ -38,7 +38,7 @@ router.post('/register', register);
 
 /**
  * @swagger
- * /api/login:
+ * /login:
  *   post:
  *     summary: Login user
  *     tags: [Users]
@@ -61,7 +61,7 @@ router.post('/login', login);
 
 /**
  * @swagger
- * /api/user/details:
+ * /user/details:
  *   get:
  *     summary: Get logged-in user details
  *     tags: [Users]
@@ -75,7 +75,7 @@ router.get("/user/details", authenticate, getUser);
 
 /**
  * @swagger
- * /api/user/{id}:
+ * /user/{id}:
  *   get:
  *     summary: Get user by ID
  *     tags: [Users]
@@ -95,7 +95,7 @@ router.get("/user/:id", authenticate, getUserById);
 
 /**
  * @swagger
- * /api/user/{id}:
+ * /user/{id}:
  *   delete:
  *     summary: Delete a user
  *     tags: [Users]
@@ -115,7 +115,7 @@ router.delete("/user/:id", authenticate, authorize('admin'), deleteUser);
 
 /**
  * @swagger
- * /api/user/{id}:
+ * /user/{id}:
  *   patch:
  *     summary: Update a user
  *     tags: [Users]
