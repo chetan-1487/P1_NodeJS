@@ -72,33 +72,61 @@ export const updateUserDetails= async (req,res)=>{
 
 
 export const registerUser = async (req) => {
-    try{
-        const { UserName, email, password, role } = req.body;
-        const hash = await bcrypt.hash(password, 10);
-        await User.create({ UserName, email, password: hash, role });
+  const { UserName, email, password, role } = req.body;
 
-        // Fetch user again without password
-        const user = await User.findOne({
-            where: { email },
-            attributes: { exclude: ['password'] }
-        });
-        return user;
-    }catch(err){
-        return err;
-    }
+  if (!email || !password) {
+    throw new Error('Email and password are required');
+  }
+
+  const existingUser = await User.findOne({ where: { email } });
+  if (existingUser) {
+    throw new Error('User already exists');
+  }
+  const hash = await bcrypt.hash(password, 10);
+  await User.create({ UserName, email, password: hash, role });
+  const user = await User.findOne({
+    where: { email },
+    attributes: { exclude: ['password'] }
+  });
+
+  return user;
 };
 
 
 export const loginUser = async (req) => {
-    try{
-        const { email, password } = req.body;
-        const userDetail =await User.findOne({ where: { email } });
-        if (!User || !(await bcrypt.compare(password, userDetail.password))) {
-            return ({ error: 'Invalid credentials' });
-        }
-        let token = jwt.sign({ id: userDetail.id, role: userDetail.role }, 'secret', { expiresIn: '30m' });
-        return token;
-    }catch(err){
-        return err;
+  const existingToken = req.cookies?.token;
+  if (existingToken) {
+    try {
+      jwt.verify(existingToken, 'secret');
+      throw new Error('already_logged_in');
+    } catch (err) {
+      // continue to login
     }
+  }
+
+  const { email, password } = req.body;
+  if (!email || !password) {
+    throw new Error('missing_fields');
+  }
+
+  const userDetail = await User.findOne({ where: { email } });
+  if (!userDetail || !(await bcrypt.compare(password, userDetail.password))) {
+    throw new Error('invalid_credentials');
+  }
+
+  const token = jwt.sign({ id: userDetail.id, role: userDetail.role }, 'secret', {
+    expiresIn: '30m',
+  });
+
+  const { password: _, ...safeUser } = userDetail.toJSON();
+  return { token, user: safeUser };
+};
+
+
+export const logoutServices = async (res) =>{
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: true, // Use true in production (HTTPS)
+        sameSite: 'None', // For cross-site cookies
+    });
 }

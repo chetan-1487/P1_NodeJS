@@ -4,16 +4,27 @@ import user_routes from "./routes/user.js";
 import swaggerUi from 'swagger-ui-express'
 import swaggerSpec from './swagger.js';
 import cors from 'cors';
+import cookieParser from 'cookie-parser'
 
 const app=express()
 
 const port = process.env.PORT;
 
-// app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,              
+  })
+);
+
 app.use(express.json({ limit: "50mb", strict: false }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec,{
+    swaggerOptions:{
+        withCredentials: true,
+    },
+}));
+app.use(cookieParser());
 app.use(user_routes);
 app.use(blog_routes);
 

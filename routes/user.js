@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import { getUser, getUserById, deleteUser, updateUser } from '../controllers/user-controller.js';
-import { register, login } from '../controllers/auth-controller.js';
+import { register, login, logout } from '../controllers/auth-controller.js';
 import { authenticate, authorize } from '../middlewares/auth-middleware.js';
 
 /**
@@ -24,7 +24,7 @@ import { authenticate, authorize } from '../middlewares/auth-middleware.js';
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               UserName:
  *                 type: string
  *               email:
  *                 type: string
@@ -65,8 +65,6 @@ router.post('/login', login);
  *   get:
  *     summary: Get logged-in user details
  *     tags: [Users]
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: User data
@@ -85,8 +83,6 @@ router.get("/user/details", authenticate, getUser);
  *         required: true
  *         schema:
  *           type: string
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: User found
@@ -105,8 +101,6 @@ router.get("/user/:id", authenticate, getUserById);
  *         required: true
  *         schema:
  *           type: string
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: User deleted
@@ -134,12 +128,23 @@ router.delete("/user/:id", authenticate, authorize('admin'), deleteUser);
  *             properties:
  *               username:
  *                 type: string
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: User updated
  */
 router.patch("/user/:id", authenticate, authorize('admin'), updateUser);
+
+/**
+ * @swagger
+ * /logout:
+ *   post:
+ *     summary: Log out user and clear token cookie
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Logged out successfully
+ */
+router.post('/logout', logout);
+
 
 export default router;

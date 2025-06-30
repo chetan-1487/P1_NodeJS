@@ -21,8 +21,6 @@ import { authenticate, authorize } from '../middlewares/auth-middleware.js';
  *   get:
  *     summary: Get all blogs
  *     tags: [Blogs]
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: A list of blog posts
@@ -35,8 +33,6 @@ router.get("/blogs", authenticate, getBlogs);
  *   post:
  *     summary: Create a new blog post
  *     tags: [Blogs]
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -60,8 +56,6 @@ router.post("/blog", authenticate, createBlog);
  *   delete:
  *     summary: Delete a blog post
  *     tags: [Blogs]
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -80,8 +74,6 @@ router.delete("/blog/:id", authenticate, authorize('admin'), deleteBlog);
  *   patch:
  *     summary: Update a blog post
  *     tags: [Blogs]
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
