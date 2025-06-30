@@ -1,5 +1,5 @@
-import user from './user.js';
-import blog from './blog.js';
+import user from "./user.js";
+import blog from "./blog.js";
 
 user.hasMany(blog, {
   foreignKey: "userId",

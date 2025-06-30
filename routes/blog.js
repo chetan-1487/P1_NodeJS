@@ -1,12 +1,12 @@
-import express from 'express';
+import express from "express";
 const router = express.Router();
 import {
   getBlogs,
   createBlog,
   deleteBlog,
   updateBlog,
-} from '../controllers/blog-controller.js';
-import { authenticate, authorize } from '../middlewares/auth-middleware.js';
+} from "../controllers/blog-controller.js";
+import { authenticate, authorize } from "../middlewares/auth-middleware.js";
 
 /**
  * @swagger
@@ -66,7 +66,7 @@ router.post("/blog", authenticate, createBlog);
  *       200:
  *         description: Blog deleted
  */
-router.delete("/blog/:id", authenticate, authorize('admin'), deleteBlog);
+router.delete("/blog/:id", authenticate, authorize("admin"), deleteBlog);
 
 /**
  * @swagger
@@ -95,6 +95,6 @@ router.delete("/blog/:id", authenticate, authorize('admin'), deleteBlog);
  *       200:
  *         description: Blog updated
  */
-router.patch("/blog/:id", authenticate, authorize('admin'), updateBlog);
+router.patch("/blog/:id", authenticate, authorize("admin"), updateBlog);
 
 export default router;

@@ -1,20 +1,20 @@
-import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerJSDoc from "swagger-jsdoc";
 
 const options = {
   definition: {
-    openapi: '3.0.0',
+    openapi: "3.0.0",
     info: {
-      title: 'My API',
-      version: '1.0.0',
-      description: 'API documentation using Swagger',
+      title: "My API",
+      version: "1.0.0",
+      description: "API documentation using Swagger",
     },
     servers: [
       {
-        url: 'http://localhost:3000',
+        url: "http://localhost:3000",
       },
     ],
   },
-  apis: ['./routes/*.js'],
+  apis: ["./routes/*.js"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);

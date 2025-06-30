@@ -1,8 +1,13 @@
-import express from 'express';
+import express from "express";
 const router = express.Router();
-import { getUser, getUserById, deleteUser, updateUser } from '../controllers/user-controller.js';
-import { register, login, logout } from '../controllers/auth-controller.js';
-import { authenticate, authorize } from '../middlewares/auth-middleware.js';
+import {
+  getUser,
+  getUserById,
+  deleteUser,
+  updateUser,
+} from "../controllers/user-controller.js";
+import { register, login, logout } from "../controllers/auth-controller.js";
+import { authenticate, authorize } from "../middlewares/auth-middleware.js";
 
 /**
  * @swagger
@@ -34,7 +39,7 @@ import { authenticate, authorize } from '../middlewares/auth-middleware.js';
  *       201:
  *         description: User registered successfully
  */
-router.post('/register', register);
+router.post("/register", register);
 
 /**
  * @swagger
@@ -57,7 +62,7 @@ router.post('/register', register);
  *       200:
  *         description: Login successful
  */
-router.post('/login', login);
+router.post("/login", login);
 
 /**
  * @swagger
@@ -105,7 +110,7 @@ router.get("/user/:id", authenticate, getUserById);
  *       200:
  *         description: User deleted
  */
-router.delete("/user/:id", authenticate, authorize('admin'), deleteUser);
+router.delete("/user/:id", authenticate, authorize("admin"), deleteUser);
 
 /**
  * @swagger
@@ -132,7 +137,7 @@ router.delete("/user/:id", authenticate, authorize('admin'), deleteUser);
  *       200:
  *         description: User updated
  */
-router.patch("/user/:id", authenticate, authorize('admin'), updateUser);
+router.patch("/user/:id", authenticate, authorize("admin"), updateUser);
 
 /**
  * @swagger
@@ -144,7 +149,6 @@ router.patch("/user/:id", authenticate, authorize('admin'), updateUser);
  *       200:
  *         description: Logged out successfully
  */
-router.post('/logout', logout);
-
+router.post("/logout", logout);
 
 export default router;

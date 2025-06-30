@@ -34,7 +34,7 @@ const User = sequelize.define(
   {
     // Other model options go here
     tableName: "users",
-  }
+  },
 );
 
 export default User;

@@ -22,7 +22,7 @@ const blog = sequelize.define(
   },
   {
     tableName: "blogs",
-  }
+  },
 );
 
-export default blog
+export default blog;
