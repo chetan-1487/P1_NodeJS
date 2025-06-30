@@ -20,7 +20,7 @@ import { authenticate, authorize } from "../middlewares/auth-middleware.js";
  * @swagger
  * /register:
  *   post:
- *     summary: Register a new user
+ *     summary: Register new user
  *     tags: [Users]
  *     requestBody:
  *       required: true
@@ -68,7 +68,7 @@ router.post("/login", login);
  * @swagger
  * /user/details:
  *   get:
- *     summary: Get logged-in user details
+ *     summary: logged-in user
  *     tags: [Users]
  *     responses:
  *       200:
@@ -116,7 +116,7 @@ router.delete("/user/:id", authenticate, authorize("admin"), deleteUser);
  * @swagger
  * /user/{id}:
  *   patch:
- *     summary: Update a user
+ *     summary: Update user
  *     tags: [Users]
  *     parameters:
  *       - name: id
@@ -131,7 +131,7 @@ router.delete("/user/:id", authenticate, authorize("admin"), deleteUser);
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               UserName:
  *                 type: string
  *     responses:
  *       200:
@@ -143,7 +143,7 @@ router.patch("/user/:id", authenticate, authorize("admin"), updateUser);
  * @swagger
  * /logout:
  *   post:
- *     summary: Log out user and clear token cookie
+ *     summary: Log out user
  *     tags: [Users]
  *     responses:
  *       200:

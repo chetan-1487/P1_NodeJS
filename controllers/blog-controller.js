@@ -34,8 +34,8 @@ export const deleteBlog = async (req, res) => {
 
 export const updateBlog = async (req, res) => {
   try {
-    let blog = await blogUpdate(req);
-    res.status(200).json({ msg: updateData });
+    let updatedBlog = await blogUpdate(req);
+    res.status(200).json({ msg: updatedBlog });
   } catch (err) {
     res.status(500).json({ msg: err });
   }

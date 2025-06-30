@@ -53,22 +53,33 @@ export const deleteUserDetails = async (req) => {
 
 export const updateUserDetails = async (req, res) => {
   try {
-    let user = await User.findOne({ where: { id: req.params.id } });
+    const user = await User.findOne({ where: { id: req.params.id } });
+
     if (!user) {
-      return { msg: "user doesnot exist" };
+      return res.status(404).json({ msg: "User does not exist" });
     }
-    newData = req.body;
-    updateData = await User.update(newData, {
-      attributes: { exclude: ["password"] },
-      where: {
-        id: req.params.id,
-      },
+
+    const newData = req.body;
+
+    const [updatedCount] = await User.update(newData, {
+      where: { id: req.params.id },
     });
-    return updateData;
+
+    if (updatedCount === 0) {
+      return res.status(400).json({ msg: "User not updated" });
+    }
+
+    const updatedUser = await User.findOne({
+      where: { id: req.params.id },
+      attributes: { exclude: ["password"] },
+    });
+
+    return updatedUser;
   } catch (err) {
     return err;
   }
 };
+
 
 export const registerUser = async (req) => {
   const { UserName, email, password, role } = req.body;

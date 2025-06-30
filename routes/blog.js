@@ -11,7 +11,7 @@ import { authenticate, authorize } from "../middlewares/auth-middleware.js";
 /**
  * @swagger
  * tags:
- *   name: Blogs
+ *   title: Blogs
  *   description: Blog management APIs
  */
 
@@ -54,7 +54,7 @@ router.post("/blog", authenticate, createBlog);
  * @swagger
  * /blog/{id}:
  *   delete:
- *     summary: Delete a blog post
+ *     summary: Delete blog post
  *     tags: [Blogs]
  *     parameters:
  *       - name: id
@@ -72,7 +72,7 @@ router.delete("/blog/:id", authenticate, authorize("admin"), deleteBlog);
  * @swagger
  * /blog/{id}:
  *   patch:
- *     summary: Update a blog post
+ *     summary: Update blog post
  *     tags: [Blogs]
  *     parameters:
  *       - name: id
@@ -89,7 +89,7 @@ router.delete("/blog/:id", authenticate, authorize("admin"), deleteBlog);
  *             properties:
  *               title:
  *                 type: string
- *               content:
+ *               description:
  *                 type: string
  *     responses:
  *       200:

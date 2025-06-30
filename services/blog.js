@@ -53,18 +53,25 @@ export const blogDelete = async (req) => {
 
 export const blogUpdate = async (req) => {
   try {
-    let blog = await Blog.findOne({ where: { id: req.params.id } });
+    const blog = await Blog.findOne({ where: { id: req.params.id } });
     if (!blog) {
-      return { msg: "Blog doesnot exist" };
+      return { msg: "Blog does not exist" };
     }
-    newData = req.body;
-    updateData = await Blog.update(newData, {
-      where: {
-        id: req.params.id,
-      },
+
+    const newData = req.body;
+    const [updated] = await Blog.update(newData, {
+      where: { id: req.params.id },
     });
-    return updateData;
+
+    if (updated === 0) {
+      return { msg: "No changes made or invalid data" };
+    }
+
+    const updatedBlog = await Blog.findOne({ where: { id: req.params.id } });
+    return { msg: "Blog updated successfully", blog: updatedBlog };
   } catch (err) {
-    return err;
+    console.error("Blog update error:", err);
+    return { msg: err.message || "Internal server error" };
   }
 };
+
